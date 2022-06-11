@@ -46,6 +46,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					alert ("promesa rechazada, servidor caído")
 					console.log(error)
 				};
+			},
+			getVehicles: async () => {
+				try { 
+					const response = await fetch (
+						`${API_URL}/vehicles`
+					);
+					const body = await response.json();
+					if (response.status!== 200) {
+						alert ("no pudimos cargar los carros!");
+						return;
+					}
+					setStore ({
+					vehicles: body.results
+					});
+				}	
+				catch (error) {
+					alert ("promesa rechazada, servidor caído")
+					console.log(error)
+				};
 			}
 
 
