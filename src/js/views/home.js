@@ -16,7 +16,7 @@ export const Home = () => {
 						return (
 						<Card key={character.uid}
 							  item={character}
-							  resource={"people"}/>
+							  resource={"characters"}/>
 						)
 						}
 					)};
@@ -34,11 +34,11 @@ export const Home = () => {
 					)};
 				</div>
 				<div className="d-flex overflow-scroll">
-					{store.planets.map(
-					(planet, index) => {
+					{store.vehicles.map(
+					(vehicle, index) => {
 						return (
-						<Card key={planet.uid}
-							  item={vehicles} 
+						<Card key={vehicle.uid}
+							  item={vehicle} 
 							  resource={"vehicles"}
 							  />
 						)

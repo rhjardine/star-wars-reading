@@ -11,7 +11,6 @@ export const Single = props => {
 	return (
 		<div className="jumbotron">
 		
-
 			<hr className="my-4" />
 
 			<Link to="/">
