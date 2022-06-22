@@ -1,37 +1,40 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 
-export const Card =({item,resource}) => {
+export const Card =({item, ...props}) => {
+    const [isFavorite, setisFavorite] = useState(false)
+    const {store, actions} = useContext(Context)
+    useEffect(() =>{
+        if (!store.favorites.find(favorite => item.name == favorite.name)) {
+            setisFavorite(false)
+        }
+    },[store.favorites]) 
     return (
-
-  <div className="tab-pane p-3" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
-
-         <div className="card" style={{width: "18rem"}}>
-            <img src={`https://starwars-visualguide.com/assets/img/${resource}/${item.uid}.jpg`} className="card-img-top" alt={`photo of ${item.name}`}/>
-            <div className="card-body">
-                <h5 className="card-title">{item.name}</h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <Link to={`/single/people/${item.uid}`} className="btn btn-primary">Learn more!</Link>
-            </div>
-         </div>
-</div>
+        <div className="card unic m-2 border-warning border-3" style={{minWidth: "250px"}}>
+                    <img src={`https://starwars-visualguide.com/assets/img/${props.resource === "people" 
+                    ? "characters"      
+                    : props.resource}/${item.uid}.jpg`} className="card-img-top" alt="..."/>
+                    <div className="card-body bg-dark pb-2">
+                        <h5 className="card-title text-white">{item.name}</h5>
+                    <div className="container-fluid justify-content-between p-0 d-flex">
+                        <Link type="button" className="btn btn-warning btn-sm" to={`/single/${props.resource}/${item.uid}`}>{"Learn more!"}</Link>
+                        <buttom type="button" className={`btn btn-${isFavorite
+                        ? ""
+                        : "outline-"}warning btn-sm ${props.key}`} onClick={(e)=>{
+                        actions.addFavorites({...item, resource: props.resource})
+                        setisFavorite (true) 
+                    }}><i className="fa-regular fa-heart"></i></buttom>
+                    </div>   
+                    </div>
+        </div> 
     );
 };
 
-
-
-
-
-
-
-
-
 Card.propTypes = {
-
     item: PropTypes.object,
     resource: PropTypes.string
-
-};
+}
